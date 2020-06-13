@@ -16,9 +16,9 @@ const faunaDb = new FaunaDB()
 const app = new App({
     port: <number><unknown>process.env.PORT || 4000,
     controllers: [
-        new HomeController(),
+        new HomeController(faunaDb),
         new PostsController(faunaDb),
-        new TwitchController(),
+        new TwitchController(faunaDb),
     ],
     middleWares: [
         bodyParser.json(),

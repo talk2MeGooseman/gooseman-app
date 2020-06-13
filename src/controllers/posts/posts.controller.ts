@@ -45,7 +45,7 @@ class PostsController implements IControllerBase {
     }
 
     getAllPosts = async (req: Request, res: Response) => {
-        const results = await this.db.query.getIndex('all_customers').matching().all().execute()
+        const results = await this.db.query.all('all_customers').execute()
         console.log(results)
         res.send(results)
     }

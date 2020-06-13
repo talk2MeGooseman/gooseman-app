@@ -12,58 +12,82 @@ export default class FaunaDB {
     return new FaunaDBQuery(this.client);
   }
 
-  create(collection: string, data: any) {
-    return q.Create(q.Collection(collection), { data });
-  }
 }
 
 class FaunaDBQuery {
-  scope: faunadb.Expr
+  scope: faunadb.Expr;
 
   client: faunadb.Client;
 
   constructor(client: faunadb.Client) {
-    this.client = client
+    this.client = client;
   }
 
   getCollection(name: faunadb.ExprArg) {
-    this.scope = q.Collection(name)
-    return this
+    this.scope = q.Collection(name);
+    return this;
   }
 
   getIndex(index: faunadb.ExprArg) {
     this.scope = q.Index(index);
-    return this
-  }
-
-  byRef(ref: faunadb.ExprArg) {
-    this.scope = q.Ref(this.scope, ref)
-    return this
-  }
-
-  matching(value: faunadb.ExprArg = undefined) {
-    this.scope = value ? q.Match(this.scope, value) : q.Match(this.scope)
-    return this
-  }
-
-  get() {
-    this.scope = q.Get(this.scope)
-    return this
-  }
-
-  paginate() {
-    this.scope = q.Paginate(this.scope)
     return this;
   }
 
-  all() {
-    this.paginate()
-    this.scope = q.Map(this.scope, q.Lambda("X", q.Get(q.Var("X"))))
+  byRef(ref: faunadb.ExprArg) {
+    this.scope = q.Ref(this.scope, ref);
+    return this;
+  }
+
+  matching(value: faunadb.ExprArg = undefined) {
+    this.scope = value ? q.Match(this.scope, value) : q.Match(this.scope);
+    return this;
+  }
+
+  get(_: any) {
+    this.scope = q.Get(this.scope);
+    return this;
+  }
+
+  paginate(_this?: this) {
+    this.scope = q.Paginate(this.scope);
+    return this;
+  }
+
+  find(collection: faunadb.ExprArg, ref: faunadb.ExprArg) {
+    this.scope = q.Ref(q.Collection(collection), ref)
     return this
   }
 
-  execute(options: faunadb.QueryOptions = {}) {
-    return this.client.query(this.scope, options);
+  findByIndex(index: faunadb.ExprArg, value: faunadb.ExprArg) {
+    this.scope = q.Get(
+      q.Match(q.Index(index), value)
+    )
+
+    return this
   }
 
+  all(index: faunadb.ExprArg) {
+    this.getIndex(index).matching().paginate();
+    this.scope = q.Map(this.scope, q.Lambda('X', q.Get(q.Var('X'))));
+    return this;
+  }
+
+  create(collection: faunadb.ExprArg, data: object) {
+    this.scope = q.Create(q.Collection(collection), {
+      data,
+    });
+
+    return this;
+  }
+
+  update(ref: faunadb.ExprArg, data: object) {
+    this.scope = q.Update(ref, { data });
+    return this;
+  }
+
+  execute(options: faunadb.QueryOptions = {}): Promise<any> {
+    if (!this.scope) throw new Error("Construct a query");
+
+    return this.client.query(this.scope, options).catch((err) => { console.log(err) });
+  }
 }
