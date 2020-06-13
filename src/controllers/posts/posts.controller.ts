@@ -2,6 +2,7 @@ import * as express from 'express'
 import { Request, Response } from 'express'
 import IPost from './post.interface'
 import IControllerBase from 'interfaces/IControllerBase.interface'
+import { NOT_FOUND, getStatusText, CREATED  } from 'http-status-codes'
 
 class PostsController implements IControllerBase {
     public path = '/posts'
@@ -31,11 +32,11 @@ class PostsController implements IControllerBase {
         let result = this.posts.find(post => post.id == id)
 
         if (!result) {
-            res.status(404).send({
-                'error': 'Post not found!'
+            res.status(NOT_FOUND).send({
+                'error': getStatusText(NOT_FOUND)
             })
         }
-        
+
         res.render('posts/index', result)
     }
 
@@ -46,7 +47,7 @@ class PostsController implements IControllerBase {
     createPost = (req: Request, res: Response) => {
         const post: IPost = req.body
         this.posts.push(post)
-        res.send(this.posts)
+        res.status(CREATED).send(this.posts)
     }
 }
 

@@ -2,7 +2,7 @@ import App from './app'
 
 import * as bodyParser from 'body-parser'
 import loggerMiddleware from './middleware/logger'
-import * as helmet from "helmet";
+import helmet from "helmet";
 
 import PostsController from './controllers/posts/posts.controller'
 import HomeController from './controllers/home/home.controller'
