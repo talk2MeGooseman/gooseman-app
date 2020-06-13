@@ -1,5 +1,4 @@
 import TwitchClient from "twitch/lib";
-import { Context } from "@azure/functions";
 
 export interface ArgumentsWithId {
   id: string
@@ -21,6 +20,6 @@ export interface ArgumentsWithNames {
   [propName: string]: any;
 }
 
-export interface RequestContext extends Context {
+export interface RequestContext {
   twitchClient: TwitchClient
 }

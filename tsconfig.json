@@ -1,15 +1,16 @@
 {
     "compilerOptions": {
-        "sourceMap": true,
-        "target": "es6",
-        "module": "commonjs",
-        "outDir": "./dist",
-        "baseUrl": "./src",
-        "moduleResolution": "node",
+        "baseUrl": "src",
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
-        "importHelpers": true
+        "importHelpers": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "./dist",
+        "sourceMap": true,
+        "target": "ES2019",
+        "alwaysStrict": true,
     },
     "paths": {
         "@controllers/*": [
@@ -33,6 +34,8 @@
     ],
     "exclude": [
         "node_modules",
-        "public"
-    ]
+        "public",
+        "dist",
+    ],
+    "types" : []
 }
