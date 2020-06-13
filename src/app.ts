@@ -8,12 +8,12 @@ import TwitchClient from 'twitch';
 import TwitchCredentials from './constants/twitch';
 
 const server = new ApolloServer({
-    schema,
-    validationRules: [depthLimit(7)],
-    context: async () => ({
-      twitchClient: TwitchClient.withClientCredentials(TwitchCredentials.clientId, TwitchCredentials.clientSecret),
-    }),
-  });
+  schema,
+  validationRules: [depthLimit(7)],
+  context: async () => ({
+    twitchClient: TwitchClient.withClientCredentials(TwitchCredentials.clientId, TwitchCredentials.clientSecret),
+  }),
+});
 
 class App {
     public app: Application

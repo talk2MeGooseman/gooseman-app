@@ -1,4 +1,5 @@
 import App from './app'
+require('dotenv').config()
 
 import * as bodyParser from 'body-parser'
 import loggerMiddleware from './middleware/logger'
@@ -6,18 +7,22 @@ import helmet from "helmet";
 
 import PostsController from './controllers/posts/posts.controller'
 import HomeController from './controllers/home/home.controller'
+import TwitchController from './controllers/auth/twitch.controller'
+import passport from 'passport';
 
 const app = new App({
-    port: 5000,
+    port: <number><unknown>process.env.PORT || 4000,
     controllers: [
         new HomeController(),
-        new PostsController()
+        new PostsController(),
+        new TwitchController(),
     ],
     middleWares: [
         bodyParser.json(),
         bodyParser.urlencoded({ extended: true }),
         loggerMiddleware,
         helmet(),
+        passport.initialize(),
     ]
 })
 app.listen()
