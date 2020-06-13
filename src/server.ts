@@ -20,5 +20,4 @@ const app = new App({
         helmet(),
     ]
 })
-
 app.listen()

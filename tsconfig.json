@@ -20,6 +20,9 @@
         ],
         "@middleware/*": [
           "src/middleware/*"
+        ],
+        "@graphql/*": [
+            "src/graphql/*"
         ]
       },
     "include": [
