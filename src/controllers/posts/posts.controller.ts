@@ -3,8 +3,11 @@ import { Request, Response } from 'express'
 import IPost from './post.interface'
 import IControllerBase from 'interfaces/IControllerBase.interface'
 import { NOT_FOUND, getStatusText, CREATED  } from 'http-status-codes'
+import FaunaDB from '../../connectors/fauna-db'
 
 class PostsController implements IControllerBase {
+    db: FaunaDB
+
     public path = '/posts'
     public router = express.Router()
 
@@ -17,7 +20,8 @@ class PostsController implements IControllerBase {
         }
     ]
 
-    constructor() {
+    constructor(db: FaunaDB) {
+        this.db = db
         this.initRoutes()
     }
 
@@ -40,8 +44,10 @@ class PostsController implements IControllerBase {
         res.render('posts/index', result)
     }
 
-    getAllPosts = (req: Request, res: Response) => {
-        res.send(this.posts)
+    getAllPosts = async (req: Request, res: Response) => {
+        const results = await this.db.query.getIndex('all_customers').matching().all().execute()
+        console.log(results)
+        res.send(results)
     }
 
     createPost = (req: Request, res: Response) => {
