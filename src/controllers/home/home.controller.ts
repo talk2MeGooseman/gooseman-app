@@ -3,7 +3,6 @@ import { Request, Response } from 'express'
 import IControllerBase from 'interfaces/IControllerBase.interface'
 import FaunaDB from 'connectors/fauna-db'
 
-
 class HomeController implements IControllerBase {
     public path = '/'
     public router = express.Router()
