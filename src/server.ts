@@ -69,7 +69,7 @@ const app = new App({
     session({ secret: 'cats', resave: true, saveUninitialized: true }),
     passport.initialize(),
     passport.session(),
-    ensureAuthenticationMiddleware,
+    // ensureAuthenticationMiddleware,
   ],
 });
 app.listen();
