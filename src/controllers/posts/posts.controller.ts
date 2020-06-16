@@ -4,6 +4,7 @@ import IPost from './post.interface'
 import IControllerBase from 'interfaces/IControllerBase.interface'
 import { NOT_FOUND, getStatusText, CREATED  } from 'http-status-codes'
 import FaunaDB from '../../connectors/fauna-db'
+import { authenticate } from '../../decorators/authentication'
 
 class PostsController implements IControllerBase {
     db: FaunaDB
@@ -26,9 +27,9 @@ class PostsController implements IControllerBase {
     }
 
     public initRoutes() {
-        this.router.get(this.path + '/:id', this.getPost)
-        this.router.get(this.path, this.getAllPosts)
-        this.router.post(this.path, this.createPost)
+        this.router.get(this.path + '/:id', authenticate(this.getPost))
+        this.router.get(this.path, authenticate(this.getAllPosts))
+        this.router.post(this.path, authenticate(this.createPost))
     }
 
     getPost = (req: Request, res: Response) => {
@@ -46,7 +47,6 @@ class PostsController implements IControllerBase {
 
     getAllPosts = async (req: Request, res: Response) => {
         const results = await this.db.query.all('all_customers').execute()
-        console.log(results)
         res.send(results)
     }
 

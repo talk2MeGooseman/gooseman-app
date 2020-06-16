@@ -29,6 +29,9 @@ passport.use(
       },
     },
     async function (accessToken, refreshToken, profile, done) {
+      if (profile.id !== '120750024') {
+        return done('Unauthorized', null)
+      }
       const doc = await faunaDb.query.findByIndex('authentications_by_provider', 'twitch').execute();
       const data = {
         uid: profile.id,
@@ -69,7 +72,6 @@ const app = new App({
     session({ secret: 'cats', resave: true, saveUninitialized: true }),
     passport.initialize(),
     passport.session(),
-    // ensureAuthenticationMiddleware,
   ],
 });
 app.listen();
