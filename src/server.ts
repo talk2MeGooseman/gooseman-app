@@ -12,7 +12,6 @@ import HomeController from './controllers/home/home.controller';
 import TwitchController from './controllers/auth/twitch.controller';
 import FaunaDB from './connectors/fauna-db';
 import passport from 'passport';
-import ensureAuthenticationMiddleware from './middleware/ensure-authentication';
 var twitchStrategy = require('passport-twitch-new').Strategy;
 
 const faunaDb = new FaunaDB();

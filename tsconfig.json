@@ -1,16 +1,18 @@
 {
     "compilerOptions": {
+        "alwaysStrict": true,
         "baseUrl": "src",
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "importHelpers": true,
+        "lib": ["ESNext"],
         "module": "commonjs",
         "moduleResolution": "node",
-        "outDir": "./dist",
+        "outDir": "dist",
+        "rootDir": "src",
         "sourceMap": true,
         "target": "ES2019",
-        "alwaysStrict": true,
     },
     "paths": {
         "@controllers/*": [
@@ -37,5 +39,4 @@
         "public",
         "dist",
     ],
-    "types" : []
 }
