@@ -54,8 +54,8 @@ class App {
 
     public listen() {
         this.app.listen(this.port, () => {
-            console.log(`App listening on the http://localhost:${this.port}`)
-            console.log(`GQL 🚀 Server ready at http://localhost:${this.port}${server.graphqlPath}`)
+            console.log(`App listening on the ${process.env.HOST}`)
+            console.log(`GQL 🚀 Server ready at ${process.env.HOST}${server.graphqlPath}`)
         })
     }
 }
