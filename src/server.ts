@@ -21,7 +21,7 @@ passport.use(
     {
       clientID: process.env.TWITCH_CLIENT_ID,
       clientSecret: process.env.TWITCH_SECRET,
-      callbackURL: `http://localhost:${process.env.PORT}/auth/twitch/callback`,
+      callbackURL: `${process.env.HOST}/auth/twitch/callback`,
       scope: 'user_read',
       customHeaders: {
         'client-id': process.env.TWITCH_CLIENT_ID,
