@@ -1,20 +1,6 @@
 import express from 'express'
 import { Application } from 'express'
 
-import { ApolloServer, gql } from 'apollo-server-express';
-import schema from './graphql/schema'
-import depthLimit from 'graphql-depth-limit'
-import TwitchClient from 'twitch';
-import TwitchCredentials from './constants/twitch';
-
-const server = new ApolloServer({
-  schema,
-  validationRules: [depthLimit(7)],
-  context: async () => ({
-    twitchClient: TwitchClient.withClientCredentials(TwitchCredentials.clientId, TwitchCredentials.clientSecret),
-  }),
-});
-
 class App {
     public app: Application
     public port: number
@@ -23,7 +9,7 @@ class App {
         this.app = express()
         this.port = appInit.port
 
-        server.applyMiddleware({ app: this.app });
+        // server.applyMiddleware({ app: this.app });
 
         this.middlewares(appInit.middleWares)
         this.routes(appInit.controllers)
