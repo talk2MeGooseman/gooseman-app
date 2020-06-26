@@ -1,15 +1,24 @@
 import express from 'express'
 import { Application } from 'express'
+import { createServer } from "./graphql-twitch/src/express-server"
+import FaunaDB from './connectors/fauna-db';
+import context from './graphql-twitch/src/context';
 
 class App {
     public app: Application
     public port: number
 
+
     constructor(appInit: { port: number; middleWares: any; controllers: any; }) {
         this.app = express()
         this.port = appInit.port
 
-        // server.applyMiddleware({ app: this.app });
+        const faunaDb = new FaunaDB();
+        faunaDb.query.findByIndex('authentications_by_provider', 'twitch').execute().then((doc) => {
+            const authContext = context({ accessToken: doc.data.accessToken, refreshToken:  doc.data.refreshToken });
+            const server = createServer(authContext);
+            server.applyMiddleware({ app: this.app });
+        })
 
         this.middlewares(appInit.middleWares)
         this.routes(appInit.controllers)

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -fr dist",
-    "dev": "ts-node-dev --debug --no-notify --respawn --transpileOnly  src/server.ts",
+    "dev": "ts-node-dev --debug --no-notify --transpileOnly  src/server.ts",
     "start": "node dist/server.js",
     "build": "npm -s run clean && tsc --skipLibCheck"
   },
@@ -23,7 +23,8 @@
     "passport-twitch-new": "0.0.1",
     "pug": "^3.0.0",
     "ts-node": "^8.4.1",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "twitch-graphql-wrapper": "file:src/graphql-twitch"
   },
   "devDependencies": {
     "@types/express": "^4.17.1",
