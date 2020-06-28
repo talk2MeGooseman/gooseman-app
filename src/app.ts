@@ -17,7 +17,10 @@ class App {
         faunaDb.query.findByIndex('authentications_by_provider', 'twitch').execute().then((doc) => {
             const authContext = context({ accessToken: doc.data.accessToken, refreshToken:  doc.data.refreshToken });
             const server = createServer(authContext);
-            server.applyMiddleware({ app: this.app });
+            server.applyMiddleware({
+                app: this.app,
+                path: '/graphql/twitch'
+            });
         })
 
         this.middlewares(appInit.middleWares)

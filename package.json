@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "init-submodules": "git submodule update --init --recursive",
     "clean": "rm -fr dist",
     "dev": "ts-node-dev --debug --no-notify --transpileOnly  src/server.ts",
     "start": "node dist/server.js",
