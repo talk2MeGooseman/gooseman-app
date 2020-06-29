@@ -14,8 +14,19 @@ class App {
         this.port = appInit.port
 
         const faunaDb = new FaunaDB();
-        faunaDb.query.findByIndex('authentications_by_provider', 'twitch').execute().then((doc) => {
-            const authContext = context({ accessToken: doc.data.accessToken, refreshToken:  doc.data.refreshToken });
+        Promise.all([
+            faunaDb.query.findByIndex('authentications_by_provider', 'twitch').execute(),
+            faunaDb.query.findByIndex('authentications_by_provider', 'patreon').execute(),
+        ]).then((docResults) => {
+            const authContext = context({
+                accessToken: docResults[0].data.accessToken,
+                refreshToken: docResults[0].data.refreshToken,
+                patreonCreds: {
+                    accessToken: docResults[1].data.accessToken,
+                    refreshToken: docResults[1].data.refreshToken
+                }
+            });
+
             const server = createServer(authContext);
             server.applyMiddleware({
                 app: this.app,

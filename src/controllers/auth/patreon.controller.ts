@@ -1,3 +1,4 @@
+
 import * as express from 'express';
 import { Request, Response } from 'express';
 import IControllerBase from 'interfaces/IControllerBase.interface';
@@ -6,8 +7,8 @@ import FaunaDB from 'connectors/fauna-db';
 
 require('dotenv').config();
 
-class TwitchController implements IControllerBase {
-  public path = '/auth/twitch';
+class PatreonController implements IControllerBase {
+  public path = '/auth/patreon';
   public router = express.Router();
 
   constructor(db: FaunaDB) {
@@ -15,8 +16,8 @@ class TwitchController implements IControllerBase {
   }
 
   public initRoutes() {
-    this.router.get(this.path, passport.authenticate('twitch'));
-    this.router.get(this.path + '/callback', passport.authenticate('twitch', { failureRedirect: '/'  }), this.callback);
+    this.router.get(this.path, passport.authenticate('patreon'));
+    this.router.get(this.path + '/callback', passport.authenticate('patreon', { failureRedirect: '/' }), this.callback);
   }
 
   callback = (req: Request, res: Response) => {
@@ -24,4 +25,4 @@ class TwitchController implements IControllerBase {
   };
 }
 
-export default TwitchController;
+export default PatreonController;
