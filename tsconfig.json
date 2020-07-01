@@ -16,21 +16,22 @@
         "sourceMap": true,
         "target": "ES2019",
     },
+    "baseUrl": ".",
     "paths": {
-        "@controllers/*": [
+        "controllers/*": [
           "src/controllers/*"
         ],
-        "@interfaces/*": [
+        "interfaces/*": [
           "src/interfaces/*"
         ],
-        "@middleware/*": [
+        "middleware/*": [
           "src/middleware/*"
         ],
-        "@graphql/*": [
+        "graphql/*": [
             "src/graphql/*"
         ],
-        "@connectors/*": [
-          "src/connectors/*"
+        "connectors/*": [
+          "connectors/*"
         ]
       },
     "include": [
