@@ -1,12 +1,12 @@
 {
-  "name": "Gooseman-App",
+  "name": "gooseman-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "init-submodules": "git submodule update --init --recursive",
     "clean": "rm -fr dist",
-    "dev": "ts-node-dev --debug --no-notify --transpileOnly  src/server.ts",
+    "dev": "APOLLO_GRAPH_VARIANT=local ts-node-dev --debug --no-notify --transpileOnly  src/server.ts",
     "start": "node dist/server.js",
     "build": "npm -s run clean && tsc --skipLibCheck"
   },
