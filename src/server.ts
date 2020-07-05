@@ -28,7 +28,7 @@ const app = new App({
     bodyParser.json(),
     bodyParser.urlencoded({ extended: true }),
     helmet(),
-    session({ secret: 'cats', resave: true, saveUninitialized: true }),
+    session({ secret: process.env.SECRET, resave: true, saveUninitialized: true }),
     twitchPassport.initialize(),
     twitchPassport.session(),
     patreonPassport.initialize(),
