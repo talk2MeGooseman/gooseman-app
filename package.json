@@ -9,6 +9,7 @@
     "clean": "rm -fr dist",
     "dev": "APOLLO_GRAPH_VARIANT=local ts-node-dev --debug --no-notify --transpileOnly  src/server.ts",
     "start": "node dist/server.js",
+    "prestart": "npm run build",
     "build": "npm -s run clean && tsc --skipLibCheck"
   },
   "author": "",
