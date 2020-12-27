@@ -1,0 +1,21 @@
+{
+  "bindings": [
+    {
+      "route": "graphql/twitch",
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+  ],
+  "scriptFile": "../dist/src/azure-functions-server/index.js"
+}

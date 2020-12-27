@@ -1,8 +1,8 @@
 import express from 'express'
 import { Application } from 'express'
-import { createServer } from "./graphql-twitch/src/express-server"
+import { createServer } from "./lib/graphql-twitch/src/express-server"
 import FaunaDB from './connectors/fauna-db';
-import context from './graphql-twitch/src/context';
+import context from './lib/graphql-twitch/src/context';
 
 class App {
     public app: Application
