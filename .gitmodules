@@ -1,5 +1,5 @@
-[submodule "src/graphql-twitch"]
-	path = src/graphql-twitch
+[submodule "src/lib/graphql-twitch"]
+	path = src/lib/graphql-twitch
 	url = https://github.com/talk2MeGooseman/twitch-graphql-wrapper.git
 [submodule "ui"]
 	path = ui

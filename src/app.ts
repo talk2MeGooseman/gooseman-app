@@ -3,11 +3,11 @@ import { Application } from 'express'
 import { createServer } from "./lib/graphql-twitch/src/express-server"
 import FaunaDB from './connectors/fauna-db';
 import context from './lib/graphql-twitch/src/context';
+import { AccessToken } from 'twitch-auth';
 
 class App {
     public app: Application
     public port: number
-
 
     constructor(appInit: { port: number; middleWares: any; controllers: any; }) {
         this.app = express()
@@ -21,9 +21,41 @@ class App {
             const authContext = context({
                 accessToken: docResults[0].data.accessToken,
                 refreshToken: docResults[0].data.refreshToken,
+                twitchCreds: {
+                    onTokenRefresh: async (credentials) => {
+                        const doc =  docResults[0]
+                        const data = {
+                          uid: doc.data.id,
+                          provider: doc.data.provider,
+                          accessToken: credentials.accessToken,
+                          refreshToken: credentials.refreshToken,
+                          data: doc.data,
+                        };
+                        if (doc) {
+                            await faunaDb.query.update(doc.ref, data).execute();
+                        }
+                    }
+                },
                 patreonCreds: {
                     accessToken: docResults[1].data.accessToken,
-                    refreshToken: docResults[1].data.refreshToken
+                    refreshToken: docResults[1].data.refreshToken,
+                    onTokenRefresh: async (credentials) => {
+                        const doc =  docResults[1]
+                        const data = {
+                            uid: doc.data.id,
+                            provider: doc.data.provider,
+                            accessToken: credentials.accessToken,
+                            refreshToken: credentials.refreshToken,
+                            data: doc.data,
+                          };
+
+                          // Create or Update credentials here
+                          if (doc) {
+                            await faunaDb.query.update(doc.ref, data).execute();
+                          } else {
+                            await faunaDb.query.create('authentications', data).execute();
+                          }
+                    }
                 }
             });
 

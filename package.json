@@ -8,8 +8,8 @@
     "submodules:init": "git submodule update --init --recursive",
     "clean": "rm -fr dist",
     "dev": "APOLLO_GRAPH_VARIANT=local ts-node-dev --debug --no-notify --transpileOnly  src/server.ts",
-    "start": "node dist/server.js",
-    "prestart": "npm run build",
+    "start": "ts-node src/server.ts",
+    "pprestart": "npm run build",
     "build": "npm -s run clean && tsc --skipLibCheck"
   },
   "author": "",
@@ -19,26 +19,26 @@
     "axios": "^0.20.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "4.17.1",
     "express-session": "^1.17.1",
     "faunadb": "^2.14.2",
-    "helmet": "^3.22.1",
+    "helmet": "^3.23.3",
     "http-status-codes": "^1.4.0",
     "passport": "^0.4.1",
-    "passport-twitch-new": "0.0.1",
+    "passport-twitch-new": "0.0.2",
     "pug": "^3.0.0",
-    "ts-node": "^8.4.1",
-    "tslib": "^2.0.0",
-    "twitch-graphql-wrapper": "file:src/graphql-twitch"
+    "ts-node": "^8.10.2",
+    "tslib": "^2.0.3",
+    "twitch-graphql-wrapper": "file:src/lib/graphql-twitch"
   },
   "devDependencies": {
-    "@types/express": "^4.17.1",
+    "@types/express": "4.17.1",
     "@types/helmet": "0.0.47",
     "@types/node": "^14.0.13",
     "@types/passport": "^1.0.3",
     "nodemon": "^2.0.4",
     "ts-node-dev": "1.0.0-pre.47",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.7"
   },
   "engines": {
     "node": ">=12.0.0"

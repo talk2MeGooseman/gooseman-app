@@ -56,12 +56,10 @@ const initPatreonPassport = ({ faunaDb }) => {
   );
 
   passport.serializeUser(function (user, done) {
-    console.log('cereal', user)
     done(null, user);
   });
 
   passport.deserializeUser(function (user, done) {
-    console.log('decereal', user)
     done(null, user);
   });
 
