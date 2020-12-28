@@ -29,7 +29,7 @@
     "pug": "^3.0.0",
     "ts-node": "^8.10.2",
     "tslib": "^2.0.3",
-    "twitch-graphql-wrapper": "file:src/lib/graphql-twitch"
+    "twitch-graphql-wrapper": "file:src/lib/twitch-graphql-wrapper"
   },
   "devDependencies": {
     "@types/express": "4.17.1",
