@@ -1,7 +1,5 @@
-import TwitchClient from "twitch/lib";
-
 export interface IContext {
-  twitchClient?: TwitchClient,
+  twitchClient?: any,
   patreonClient?: any,
 }
 
@@ -26,7 +24,7 @@ export interface ArgumentsWithNames {
 }
 
 export interface RequestContext extends IContext {
-  twitchClient: TwitchClient
+  twitchClient: any,
 }
 
 export interface IInclude {

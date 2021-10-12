@@ -1,5 +1,5 @@
-import { ApiClient as TwitchClient } from 'twitch';
-import { AccessToken, RefreshableAuthProvider, StaticAuthProvider } from 'twitch-auth';
+import { ApiClient as TwitchClient } from '@twurple/api';
+import { AccessToken, RefreshingAuthProvider } from '@twurple/auth';
 import TwitchCredentials from '../credentials/twitch'
 import { IContext } from '../interfaces/IGraphql.interface'
 import axios from 'axios';
@@ -25,16 +25,21 @@ export default ({ accessToken, refreshToken, twitchCreds, patreonCreds } : GqlCo
     throw new Error("Missing TWITCH_CLIENT_ID and/or TWITCH_SECRET environment variables");
   }
 
-  const authProvider = new RefreshableAuthProvider(
-    new StaticAuthProvider(TwitchCredentials.clientId, accessToken),
+  const authProvider = new RefreshingAuthProvider(
     {
+        clientId: TwitchCredentials.clientId,
         clientSecret: TwitchCredentials.clientSecret,
-        refreshToken,
         onRefresh: (credentials) => {
           if (twitchCreds?.onTokenRefresh) {
             twitchCreds.onTokenRefresh(credentials)
           }
         }
+    },
+    {
+      accessToken,
+      refreshToken,
+      expiresIn: 0,
+      obtainmentTimestamp: 0
     }
   );
   context['twitchClient'] = new TwitchClient({ authProvider })

@@ -1,4 +1,4 @@
-import { HelixSubscription } from 'twitch';
+import { HelixSubscription } from '@twurple/api';
 
 export default {
   HelixSubscription: {

@@ -1,4 +1,4 @@
-import { HelixStream } from 'twitch';
+import { HelixStream } from '@twurple/api';
 
 export default {
   HelixStream: {

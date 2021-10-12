@@ -2,7 +2,7 @@ import express from 'express';
 import { Application } from 'express';
 import FaunaDB from './connectors/fauna-db';
 import context from './gql/context';
-import { AccessToken } from 'twitch-auth';
+import { AccessToken } from '@twurple/auth';
 
 import { ApolloServer } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';

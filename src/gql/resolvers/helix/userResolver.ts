@@ -1,4 +1,4 @@
-import { HelixUser } from "twitch"
+import { HelixUser } from "@twurple/api"
 import { RequestContext, ArgumentsWithId, ArgumentsWithName } from '../../../interfaces/IGraphql.interface';
 
 export default {

@@ -33,7 +33,7 @@ const initTwitchPassport = ({ faunaDb }) => {
         if (doc) {
           await faunaDb.query.update(doc.ref, data).execute();
         } else {
-          await faunaDb.query.create('authentications', data).execute();
+          await faunaDb.query.create('authentications', { data }).execute();
         }
         done(null, profile);
       },

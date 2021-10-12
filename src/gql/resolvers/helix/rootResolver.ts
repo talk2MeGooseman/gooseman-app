@@ -1,4 +1,4 @@
-import { HelixStreamType, HelixUser } from 'twitch';
+import { HelixUser } from '@twurple/api';
 import { RequestContext, ArgumentsWithIds, ArgumentsWithNames, ArgumentsWithId } from '../../../interfaces/IGraphql.interface';
 
 export default {
@@ -10,14 +10,14 @@ export default {
         },
         async streamsByIds(args: ArgumentsWithIds, context: RequestContext) {
           const streamsPaginator = context.twitchClient.helix.streams.getStreamsPaginated(
-            { userId: args.ids, type: HelixStreamType.Live }
+            { userId: args.ids, type: 'live' }
           );
 
           return await streamsPaginator.getAll()
         },
         async streamsByNames(args: ArgumentsWithNames, context: RequestContext) {
           const streamsPaginator = context.twitchClient.helix.streams.getStreamsPaginated(
-            { userName: args.names, type: HelixStreamType.Live }
+            { userName: args.names, type: 'live' }
           );
           return await streamsPaginator.getAll()
         },
