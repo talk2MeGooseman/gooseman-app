@@ -1,9 +1,15 @@
 import express from 'express';
 import { Application } from 'express';
-import { createServer } from './lib/twitch-graphql-wrapper/src/express-server';
 import FaunaDB from './connectors/fauna-db';
-import context from './lib/twitch-graphql-wrapper/src/context';
+import context from './gql/context';
 import { AccessToken } from 'twitch-auth';
+
+import { ApolloServer } from 'apollo-server-express'
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import schema from './gql/schema'
+import depthLimit from 'graphql-depth-limit'
+import { snakeCaseFieldResolver } from './gql/middleware/fieldResolver'
+import http from 'http';
 
 class App {
   public app: Application;
@@ -11,6 +17,8 @@ class App {
 
   constructor(appInit: { port: number; middleWares: any; controllers: any }) {
     this.app = express();
+    const httpServer = http.createServer(this.app);
+
     this.port = appInit.port;
 
     const faunaDb = new FaunaDB();
@@ -63,11 +71,21 @@ class App {
         },
       });
 
-      const server = createServer(authContext);
-      server.applyMiddleware({
-        app: this.app,
-        path: '/graphql/twitch',
+      const server = new ApolloServer({
+        schema,
+        validationRules: [depthLimit(7)],
+        context: authContext ,
+        fieldResolver: snakeCaseFieldResolver,
+        plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
       });
+
+      server.start().then(() => {
+        server.applyMiddleware({
+          app: this.app,
+          path: '/graphql/twitch',
+        });
+      })
+
     });
 
     this.middlewares(appInit.middleWares);
