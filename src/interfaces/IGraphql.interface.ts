@@ -40,3 +40,16 @@ export interface IPatreonUser {
   imageUrl: string
   url: string
 }
+
+export interface IOAuthCredentials {
+  expiresIn?: any;
+  obtainmentTimestamp?: number;
+  accessToken: string
+  refreshToken: string
+  onTokenRefresh?: (credentials: IOAuthCredentials) => Promise<any>
+}
+
+export interface GqlContext {
+  twitchCreds?: IOAuthCredentials
+  patreonCreds?: IOAuthCredentials
+}

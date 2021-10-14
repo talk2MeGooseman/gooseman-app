@@ -26,14 +26,14 @@ const initTwitchPassport = ({ faunaDb }) => {
           provider: profile.provider,
           accessToken,
           refreshToken,
-          data: profile,
+          profile,
         };
 
         // Create or Update credentials here
         if (doc) {
           await faunaDb.query.update(doc.ref, data).execute();
         } else {
-          await faunaDb.query.create('authentications', { data }).execute();
+          await faunaDb.query.create('authentications', data).execute();
         }
         done(null, profile);
       },

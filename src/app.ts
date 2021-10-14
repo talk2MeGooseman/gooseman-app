@@ -2,8 +2,6 @@ import express from 'express';
 import { Application } from 'express';
 import FaunaDB from './connectors/fauna-db';
 import context from './gql/context';
-import { AccessToken } from '@twurple/auth';
-
 import { ApolloServer } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import schema from './gql/schema'
@@ -31,17 +29,19 @@ class App {
         .execute(),
     ]).then((docResults) => {
       const authContext = context({
-        accessToken: docResults[0].data.accessToken,
-        refreshToken: docResults[0].data.refreshToken,
         twitchCreds: {
+          accessToken: docResults[0].data.accessToken,
+          refreshToken: docResults[0].data.refreshToken,
           onTokenRefresh: async (credentials) => {
             const doc = docResults[0];
             const data = {
               uid: doc.data.id,
-              provider: doc.data.provider,
+              provider: 'twitch',
               accessToken: credentials.accessToken,
               refreshToken: credentials.refreshToken,
-              data: doc.data,
+              expiresIn: credentials.expiresIn,
+              obtainmentTimestamp: credentials.obtainmentTimestamp,
+              profile: doc.profile,
             };
             if (doc) {
               await faunaDb.query.update(doc.ref, data).execute();
@@ -58,7 +58,9 @@ class App {
               provider: doc.data.provider,
               accessToken: credentials.accessToken,
               refreshToken: credentials.refreshToken,
-              data: doc.data,
+              expiresIn: credentials.expiresIn,
+              obtainmentTimestamp: credentials.obtainmentTimestamp,
+              profile: doc.profile,
             };
 
             // Create or Update credentials here
@@ -67,6 +69,8 @@ class App {
             } else {
               await faunaDb.query.create('authentications', data).execute();
             }
+
+            return data
           },
         },
       });
