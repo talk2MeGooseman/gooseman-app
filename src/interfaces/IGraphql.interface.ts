@@ -1,6 +1,8 @@
+import { PatreonClient } from "lib/PatreonClient";
+
 export interface IContext {
   twitchClient?: any,
-  patreonClient?: any,
+  patreonClient?: PatreonClient,
 }
 
 export interface ArgumentsWithId {
