@@ -9,7 +9,7 @@ export default {
             const { data: members, included } = await context.patreonClient.getPatrons();
 
             return members.map((member: any) => {
-              const userId = member.relationships.user.data.id
+              const userId = member.relationships.patron.data.id
 
               const user = included.reduce((accum: IPatreonUser, include: IInclude) => {
                 if (include.type === 'user' && include.id === userId) {

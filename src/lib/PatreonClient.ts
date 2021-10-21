@@ -17,9 +17,10 @@ export class PatreonClient {
       await this.refreshPatreonToken();
     }
 
-    const response = await this.patreonClient.get(
-      'campaigns/4776554/members?include=user,currently_entitled_tiers,address&fields%5Bmember%5D=full_name,is_follower,last_charge_date,last_charge_status,lifetime_support_cents,currently_entitled_amount_cents,patron_status&fields%5Btier%5D=amount_cents,created_at,description,patron_count,title,url&fields%5Buser%5D=full_name,about,image_url,url'
-    );
+    const response = await axios.get('https://www.patreon.com/api/oauth2/api/campaigns/4776554/pledges?include=patron&page%5Bcount%5D=50&fields%5Bpledge%5D=total_historical_amount_cents,status', { headers: { Authorization: `Bearer ${this.credentials?.accessToken}` } });
+    // const response = await this.patreonClient.get(
+    //   'campaigns/4776554/members?include=user,currently_entitled_tiers&fields%5Bmember%5D=full_name,is_follower,lifetime_support_cents,currently_entitled_amount_cents,patron_status&fields%5Btier%5D=amount_cents,created_at,description,patron_count,title,url&fields%5Buser%5D=full_name,about,image_url,url'
+    // );
 
     return response.data;
   }
@@ -30,7 +31,7 @@ export class PatreonClient {
     }
 
     const response = await this.patreonClient.get(
-      'identity?include=campaign&fields%5Buser%5D=about,created,email,first_name,full_name,image_url,last_name,thumb_url,url,vanity&fields%5Bcampaign%5D=summary,url,patron_count,creation_name'
+      'identity?include=campaign&fields%5Buser%5D=about,created,first_name,full_name,image_url,last_name,thumb_url,url,vanity&fields%5Bcampaign%5D=summary,url,patron_count,creation_name'
     );
 
     return response.data;
